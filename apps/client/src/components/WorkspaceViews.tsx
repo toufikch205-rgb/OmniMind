@@ -8,7 +8,7 @@ const C = {
   purpleSoft: "#F1E8FF", teal: "#20AAA6", tealSoft: "#E3F7F6",
 };
 
-type MetricProps = { icon: string; label: string; value: string; hint: string; color: string; tint: string };
+type MetricProps = { icon: string; label: string; value: string; hint: string; color: string; tint: string; wide: boolean };
 
 export function AppIcon({ name, color, size = 28 }: { name: string; color: string; size?: number }) {
   const stroke = Math.max(2, Math.round(size * 0.075));
@@ -40,27 +40,27 @@ export function Dashboard() {
       </View>
 
       <View style={[s.metrics, wide && s.metricsWide]}>
-        <Metric icon="check" label="المهام المكتملة" value="12" hint="من 18" color={C.green} tint={C.greenSoft} />
-        <Metric icon="calendar" label="أهداف هذا الشهر" value="3" hint="من 5" color={C.purple} tint={C.purpleSoft} />
-        <Metric icon="bulb" label="محادثات AI" value="8" hint="هذا الأسبوع" color={C.blue} tint={C.blueSoft} />
-        <Metric icon="clock" label="إجمالي الوقت" value="3" hint="هذا الأسبوع" color={C.teal} tint={C.tealSoft} />
+        <Metric icon="check" label="المهام المكتملة" value="12" hint="من 18" color={C.green} tint={C.greenSoft} wide={wide} />
+        <Metric icon="calendar" label="أهداف هذا الشهر" value="3" hint="من 5" color={C.purple} tint={C.purpleSoft} wide={wide} />
+        <Metric icon="bulb" label="محادثات AI" value="8" hint="هذا الأسبوع" color={C.blue} tint={C.blueSoft} wide={wide} />
+        <Metric icon="clock" label="إجمالي الوقت" value="3" hint="هذا الأسبوع" color={C.teal} tint={C.tealSoft} wide={wide} />
       </View>
 
       <Text style={s.sectionTitle}>أقسام التطبيق</Text>
       <View style={[s.sections, wide && s.sectionsWide]}>
-        <SectionCard icon="check" title="المهام" color={C.blue} tint={C.blueSoft} />
-        <SectionCard icon="calendar" title="التخطيط" color={C.purple} tint={C.purpleSoft} />
-        <SectionCard icon="book" title="المعرفة" color={C.teal} tint={C.tealSoft} />
-        <SectionCard icon="projects" title="المشاريع" color={C.green} tint={C.greenSoft} />
+        <SectionCard icon="check" title="المهام" color={C.blue} tint={C.blueSoft} wide={wide} />
+        <SectionCard icon="calendar" title="التخطيط" color={C.purple} tint={C.purpleSoft} wide={wide} />
+        <SectionCard icon="book" title="المعرفة" color={C.teal} tint={C.tealSoft} wide={wide} />
+        <SectionCard icon="projects" title="المشاريع" color={C.green} tint={C.greenSoft} wide={wide} />
       </View>
       <Text style={s.note}>الأرقام المعروضة حالياً تجريبية، وسيتم ربطها ببياناتك الفعلية تدريجياً.</Text>
     </PageFrame>
   );
 }
 
-function Metric({ icon, label, value, hint, color, tint }: MetricProps) {
+function Metric({ icon, label, value, hint, color, tint, wide }: MetricProps) {
   return (
-    <View style={s.metric}>
+    <View style={[s.metric, wide && s.metricWide]}>
       <View style={[s.metricIcon, { backgroundColor: tint }]}><AppIcon name={icon} color={color} size={31} /></View>
       <View style={s.metricCopy}>
         <Text style={s.metricLabel}>{label}</Text>
@@ -70,9 +70,9 @@ function Metric({ icon, label, value, hint, color, tint }: MetricProps) {
   );
 }
 
-function SectionCard({ icon, title, color, tint }: { icon: string; title: string; color: string; tint: string }) {
+function SectionCard({ icon, title, color, tint, wide }: { icon: string; title: string; color: string; tint: string; wide: boolean }) {
   return (
-    <View style={s.sectionCard}>
+    <View style={[s.sectionCard, wide && s.sectionCardWide]}>
       <View style={[s.sectionIcon, { backgroundColor: tint }]}><AppIcon name={icon} color={color} size={32} /></View>
       <Text style={s.sectionCardTitle}>{title}</Text>
     </View>
@@ -104,7 +104,7 @@ const s = StyleSheet.create({
   metrics: { gap: 12 },
   metricsWide: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 12 },
   metric: { minHeight: 112, width: "100%", backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 19, paddingHorizontal: 17, paddingVertical: 15, flexDirection: "row", alignItems: "center", gap: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  metricIcon: { width: 62, height: 62, borderRadius: 33, alignItems: "center", justifyContent: "center" },
+  metricWide: { width: "48.5%" },\n  metricIcon: { width: 62, height: 62, borderRadius: 33, alignItems: "center", justifyContent: "center" },
   
   metricCopy: { flex: 1, alignItems: "flex-end" },
   metricLabel: { color: "#536176", fontSize: 13, fontWeight: "700", textAlign: "right" },
@@ -115,7 +115,7 @@ const s = StyleSheet.create({
   sections: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 12 },
   sectionsWide: { justifyContent: "space-between", gap: 0 },
   sectionCard: { width: "48.3%", minHeight: 148, backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 18, alignItems: "center", justifyContent: "center", padding: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  sectionIcon: { width: 62, height: 62, borderRadius: 34, alignItems: "center", justifyContent: "center", marginBottom: 10 },
+  sectionCardWide: { width: "23.5%" },\n  sectionIcon: { width: 62, height: 62, borderRadius: 34, alignItems: "center", justifyContent: "center", marginBottom: 10 },
   
   sectionCardTitle: { color: "#536176", fontSize: 14, fontWeight: "800" },
   note: { color: "#9AA5B4", fontSize: 10, textAlign: "center", marginTop: 18, lineHeight: 16 },

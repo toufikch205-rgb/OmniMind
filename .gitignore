@@ -1,0 +1,14 @@
+node_modules/
+.pnpm-store/
+.expo/
+.expo-shared/
+dist/
+build/
+coverage/
+web-build/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/

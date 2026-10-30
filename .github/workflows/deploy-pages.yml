@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: TypeScript validation
+        run: pnpm typecheck
+
       - name: Export web app
         run: pnpm --filter @omnimind/client export:web
 

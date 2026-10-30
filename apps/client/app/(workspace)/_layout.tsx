@@ -1,5 +1,5 @@
 import { Slot, usePathname, useRouter } from "expo-router";
-import { AppIcon } from "../../src/components/AppIcon";
+import { WorkspaceHeader } from "../../src/components/workspace/WorkspaceHeader";
 import { NavItem, workspaceNavigation } from "../../src/components/navigation/WorkspaceNavigation";
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 
@@ -16,18 +16,7 @@ export default function WorkspaceLayout() {
 
   return (
     <View style={s.app}>
-      {!immersive ? <View style={s.header}>
-        <Pressable accessibilityRole="button" accessibilityLabel="فتح القائمة" style={s.menuButton}>
-          <Text style={s.menuGlyph}>☰</Text>
-        </Pressable>
-        <View style={s.brandRow}>
-          <View style={s.logo}><Text style={s.logoText}>O</Text></View>
-          <Text style={s.brand}><Text style={{ color: C.blue }}>Omni</Text><Text style={{ color: C.purple }}>Mind</Text></Text>
-        </View>
-        <View style={s.headerRight}>
-          <View style={s.bellWrap}><AppIcon name="bell" color="#526174" size={23} /><View style={s.notificationDot} /></View>
-        </View>
-      </View> : null}
+      {!immersive ? <WorkspaceHeader /> : null}
 
       {!immersive && tablet ? <View style={s.tablet}><ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.tabletInner}>{workspaceNavigation.map(i => <NavItem key={i.path} item={i} active={selected === i.path} onPress={() => go(i.path)} />)}</ScrollView></View> : null}
 

@@ -5,7 +5,7 @@ import { TaskBlock } from "../components/TaskBlock";
 import { loadPages, savePages } from "../storage";
 import { createId, type BlockType, type FlatPage, type TaskBlockData, type TaskPage } from "../types";
 
-export default function TasksRoute() {
+export default function TasksScreen() {
   const [pages, setPages] = useState<TaskPage[]>([]);
   const [selected, setSelected] = useState("");
   const [editorOpen, setEditorOpen] = useState(false);

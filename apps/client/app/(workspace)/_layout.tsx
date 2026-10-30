@@ -32,17 +32,6 @@ export default function WorkspaceLayout() {
 
 const s = StyleSheet.create({
   app: { flex: 1, backgroundColor: C.bg },
-  header: { height: 66, paddingHorizontal: 18, backgroundColor: C.surface, borderBottomWidth: 1, borderBottomColor: C.border, flexDirection: "row", alignItems: "center", gap: 15 },
-  menuButton: { width: 30, height: 38, alignItems: "center", justifyContent: "center" },
-  menuGlyph: { color: "#526174", fontSize: 25, fontWeight: "700" },
-  brandRow: { flexDirection: "row", alignItems: "center", gap: 5 },
-  logo: { width: 30, height: 30, borderRadius: 15, borderWidth: 3, borderColor: "#78A4F5", alignItems: "center", justifyContent: "center" },
-  logoText: { color: C.blue, fontSize: 16, fontWeight: "900" },
-  brand: { fontSize: 20, fontWeight: "900", letterSpacing: -0.7 },
-  headerRight: { marginLeft: "auto", alignItems: "center", justifyContent: "center" },
-  bellWrap: { width: 34, height: 38, alignItems: "center", justifyContent: "center" },
-  bell: { color: "#526174", fontSize: 25, fontWeight: "700" },
-  notificationDot: { position: "absolute", top: 6, right: 4, width: 8, height: 8, borderRadius: 4, backgroundColor: "#F18B8B" },
   body: { flex: 1, minHeight: 0, flexDirection: "row", width: "100%", maxWidth: 1600, alignSelf: "center", paddingBottom: 0 },
   sidebar: { width: 230, paddingHorizontal: 17, paddingTop: 28, borderRightWidth: 1, borderRightColor: C.border, backgroundColor: "#FBFCFE" },
   section: { color: C.muted, fontSize: 11, fontWeight: "800", textAlign: "right", marginRight: 12, marginBottom: 14 },

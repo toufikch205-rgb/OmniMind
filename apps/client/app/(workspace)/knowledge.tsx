@@ -1,4 +1,4 @@
-import KnowledgeScreen from "../../src/features/knowledge/screens/KnowledgeScreen";
+import { KnowledgeScreen } from "../../src/features/knowledge";
 
 export default function KnowledgeRoute() {
   return <KnowledgeScreen />;

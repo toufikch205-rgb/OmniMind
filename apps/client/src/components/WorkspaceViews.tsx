@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import { ScrollView, StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import { useRouter } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 
 const C = {
   bg: "#F8FAFC", white: "#FFFFFF", ink: "#172033", muted: "#8491A4",
@@ -48,8 +49,8 @@ export function Dashboard() {
 
       <Text style={s.sectionTitle}>أقسام التطبيق</Text>
       <View style={[s.sections, wide && s.sectionsWide]}>
-        <SectionCard icon="check" title="المهام" color={C.blue} tint={C.blueSoft} wide={wide} />
-        <SectionCard icon="calendar" title="التخطيط" color={C.purple} tint={C.purpleSoft} wide={wide} />
+        <SectionCard icon="check" title="المهام" color={C.blue} tint={C.blueSoft} wide={wide} route="/(workspace)/tasks" />
+        <SectionCard icon="calendar" title="التخطيط" color={C.purple} tint={C.purpleSoft} wide={wide} route="/(workspace)/planning" />
         
       </View>
     </PageFrame>
@@ -68,12 +69,13 @@ function Metric({ icon, label, value, hint, color, tint, wide }: MetricProps) {
   );
 }
 
-function SectionCard({ icon, title, color, tint, wide }: { icon: string; title: string; color: string; tint: string; wide: boolean }) {
+function SectionCard({ icon, title, color, tint, wide, route }: { icon: string; title: string; color: string; tint: string; wide: boolean; route: "/(workspace)/tasks" | "/(workspace)/planning" }) {
+  const router = useRouter();
   return (
-    <View style={[s.sectionCard, wide && s.sectionCardWide]}>
+    <Pressable accessibilityRole="button" accessibilityLabel={`فتح قسم ${title}`} onPress={() => router.push(route)} style={({ pressed }) => [s.sectionCard, wide && s.sectionCardWide, pressed && s.sectionCardPressed]}>
       <View style={[s.sectionIcon, { backgroundColor: tint }]}><AppIcon name={icon} color={color} size={32} /></View>
       <Text style={s.sectionCardTitle}>{title}</Text>
-    </View>
+    </Pressable>
   );
 }
 
@@ -114,6 +116,7 @@ const s = StyleSheet.create({
   sections: { flexDirection: "row", flexWrap: "nowrap", justifyContent: "space-between", columnGap: 10 },
   sectionsWide: { justifyContent: "space-between", gap: 0 },
   sectionCard: { width: "48.5%", minHeight: 108, backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 18, alignItems: "center", justifyContent: "center", padding: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  sectionCardPressed: { opacity: 0.72, transform: [{ scale: 0.98 }] },
   sectionCardWide: { width: "48.5%" },
   sectionIcon: { width: 48, height: 48, borderRadius: 24, alignItems: "center", justifyContent: "center", marginBottom: 7 },
   

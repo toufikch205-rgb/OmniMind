@@ -31,12 +31,12 @@ export default function WorkspaceLayout() {
 }
 
 const s = StyleSheet.create({
-  app: { flex: 1, backgroundColor: C.bg },
-  body: { flex: 1, minHeight: 0, flexDirection: "row", width: "100%", maxWidth: 1600, alignSelf: "center", paddingBottom: 0 },
+  app: { flex: 1, height: "100%", width: "100%", position: "relative", backgroundColor: C.bg },
+  body: { flex: 1, minHeight: 0, flexDirection: "row", width: "100%", maxWidth: 1600, alignSelf: "center", paddingBottom: 76 },
   sidebar: { width: 230, paddingHorizontal: 17, paddingTop: 28, borderRightWidth: 1, borderRightColor: C.border, backgroundColor: "#FBFCFE" },
   section: { color: C.muted, fontSize: 11, fontWeight: "800", textAlign: "right", marginRight: 12, marginBottom: 14 },
   page: { flex: 1, minWidth: 0, minHeight: 0 },
   tablet: { height: 58, backgroundColor: C.surface, borderBottomWidth: 1, borderBottomColor: C.border, justifyContent: "center" },
   tabletInner: { flexDirection: "row-reverse", alignItems: "center", paddingHorizontal: 12, gap: 8 },
-  bottom: { height: 76, minHeight: 76, width: "100%", flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-around", paddingHorizontal: 8, backgroundColor: C.surface, borderTopWidth: 1, borderTopColor: C.border, elevation: 12, zIndex: 20 },
+  bottom: { position: "absolute", left: 0, right: 0, bottom: 0, height: 76, minHeight: 76, width: "100%", flexDirection: "row-reverse", flexWrap: "nowrap", alignItems: "center", justifyContent: "space-around", paddingHorizontal: 8, backgroundColor: C.surface, borderTopWidth: 1, borderTopColor: C.border, elevation: 12, zIndex: 100 },
 });

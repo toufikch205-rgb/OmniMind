@@ -1,4 +1,4 @@
-import { Stack, usePathname, useRouter } from "expo-router";
+import { Slot, usePathname, useRouter } from "expo-router";
 import { AppIcon } from "../../src/components/WorkspaceViews";
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 
@@ -50,7 +50,7 @@ export default function WorkspaceLayout() {
 
       <View style={s.body}>
         {desktop && !immersive ? <View style={s.sidebar}><Text style={s.section}>مساحة العمل</Text>{items.map(i => <NavItem key={i.path} item={i} active={selected === i.path} onPress={() => go(i.path)} />)}</View> : null}
-        <View style={s.page}><Stack screenOptions={{ headerShown: false, animation: "fade", contentStyle: { backgroundColor: C.bg } }} /></View>
+        <View style={s.page}><Slot /></View>
       </View>
 
       <View style={s.bottom}>{items.map(i => <NavItem key={i.path} item={i} compact active={selected === i.path} onPress={() => go(i.path)} />)}</View>

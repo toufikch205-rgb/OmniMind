@@ -64,14 +64,14 @@ export function TaskBlock({ block, onChange, onDelete, onToggle }: Props) {
 }
 
 const styles = StyleSheet.create({
-  block: { minHeight: 45, flexDirection: "row-reverse", alignItems: "flex-start", gap: 8, paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: "#F3F5F8" },
-  input: { flex: 1, minWidth: 0, color: "#344256", fontSize: 13, lineHeight: 22, paddingVertical: 5, paddingHorizontal: 2, textAlignVertical: "center" },
-  heading: { fontSize: 20, lineHeight: 28, fontWeight: "800", color: "#172033", paddingTop: 10, paddingBottom: 8 },
+  block: { minHeight: 42, flexDirection: "row-reverse", alignItems: "flex-start", gap: 8, paddingVertical: 5, backgroundColor: "#FFFFFF" },
+  input: { flex: 1, minWidth: 0, color: "#263244", fontSize: 14, lineHeight: 24, paddingVertical: 5, paddingHorizontal: 2, textAlignVertical: "center", backgroundColor: "#FFFFFF", borderWidth: 0 },
+  heading: { fontSize: 21, lineHeight: 30, fontWeight: "800", color: "#172033", paddingTop: 10, paddingBottom: 8 },
   completed: { color: "#9AA5B4", textDecorationLine: "line-through" },
   checkbox: { width: 19, height: 19, marginTop: 8, borderWidth: 1.5, borderColor: "#B8C3D1", borderRadius: 5, alignItems: "center", justifyContent: "center" },
   checked: { backgroundColor: "#35BE62", borderColor: "#35BE62" },
   tick: { fontSize: 12, color: "#FFF", fontWeight: "900" },
-  bullet: { color: "#397DEB", fontSize: 22, lineHeight: 29, width: 18, textAlign: "center" },
+  bullet: { color: "#64748B", fontSize: 22, lineHeight: 29, width: 18, textAlign: "center" },
   delete: { width: 25, height: 29, alignItems: "center", justifyContent: "center" },
   deleteText: { color: "#A0AABA", fontSize: 20 },
   imageWrap: { flex: 1, gap: 7, alignItems: "stretch" },

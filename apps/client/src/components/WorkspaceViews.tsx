@@ -1,43 +1,116 @@
 import { ReactNode } from "react";
 import { ScrollView, StyleSheet, Text, View, useWindowDimensions } from "react-native";
-const C={bg:"#F8FAFC",white:"#FFFFFF",ink:"#0F172A",muted:"#64748B",green:"#22C55E",deep:"#1E293B",mint:"#EFF6FF",border:"#E5E7EB",gold:"#A855F7",pale:"#F8FAFC",blue:"#3882F6",purple:"#A855F7",teal:"#14B8A6",orange:"#F97316",charcoal:"#334155"};
-export function PageFrame({children}:{children:ReactNode}){const {width}=useWindowDimensions();return <ScrollView style={s.scroll} contentContainerStyle={[s.content,{paddingHorizontal:width>=1200?48:width>=700?30:18}]} showsVerticalScrollIndicator={false}>{children}</ScrollView>;}
-export function Dashboard(){
- const {width}=useWindowDimensions();const stacked=width<760;
- return <PageFrame>
-  <View style={s.hero}><View style={{flex:1}}><Text style={s.eyebrow}>YOUR PERSONAL COMMAND CENTER</Text><Text style={[s.heroTitle,width<420&&{fontSize:27}]}>Make room for what matters.</Text><Text style={s.description}>A calmer view of your time, priorities and ideas.</Text></View><View style={s.date}><Text style={s.dateLabel}>TODAY</Text><Text style={s.dateValue}>{new Date().getDate()}</Text></View></View>
-  <View style={[s.row,stacked&&s.stack]}><Metric icon="◷" label="Focus time" hint="Time well spent" accent={C.blue}/><Metric icon="✓" label="Open tasks" hint="Your active priorities" accent={C.green}/><Metric icon="◎" label="Current goals" hint="What you're moving toward" accent={C.purple}/></View>
-  <View style={[s.row,stacked&&s.stack]}>
-   <View style={[s.card,{flex:1.1}]}><View style={s.cardHead}><View><Text style={s.eyebrow}>START WITH INTENTION</Text><Text style={s.cardTitle}>What matters today?</Text></View><View style={s.sun}><Text style={{color:C.blue,fontSize:20}}>✳</Text></View></View>
-    <Text style={s.bodyText}>Bring your plans, tasks and knowledge together. Start small; clarity grows one step at a time.</Text>
-    <View style={s.priority}><View style={s.plus}><Text style={{color:C.green,fontSize:20}}>＋</Text></View><View style={{flex:1}}><Text style={s.priorityTitle}>Your first priority will live here</Text><Text style={s.small}>The task system is being prepared.</Text></View><Text style={{color:C.green}}>↗</Text></View>
-    <View style={s.meta}><Text style={s.tiny}>TODAY'S MOMENTUM</Text><Text style={s.tiny}>Not started</Text></View><View style={s.track}/>
-   </View>
-   <View style={[s.card,{flex:0.9}]}><Text style={s.eyebrow}>A GENTLE PLAN</Text><Text style={s.cardTitle}>Your day, at a glance</Text><Timeline time="MORNING" title="Set your direction" detail="Choose what deserves your attention."/><Timeline time="DURING THE DAY" title="Make steady progress" detail="Give one thing your full focus."/><Timeline time="EVENING" title="Reflect and reset" detail="Notice what moved forward."/></View>
-  </View>
-  <View style={[s.row,s.lower,stacked&&s.stack]}>
-   <View style={[s.card,{flex:1.2}]}><Text style={s.eyebrow}>YOUR WORKSPACE</Text><Text style={s.cardTitle}>A place for every part of your life</Text><View style={s.tiles}><Tile icon="✓" title="Tasks & goals" detail="Turn intentions into action"/><Tile icon="▦" title="Planning" detail="Shape your time"/><Tile icon="◇" title="Knowledge" detail="Keep ideas connected"/><Tile icon="▤" title="Projects" detail="Bring work together"/></View></View>
-   <View style={[s.card,{flex:0.8,backgroundColor:"#F5F3FF"}]}><Text style={s.eyebrow}>THE OMNIMIND APPROACH</Text><Text style={s.cardTitle}>Calm by design.</Text><Principle n="01" title="Clarity over clutter" detail="Only what helps you move forward."/><Principle n="02" title="Your rhythm, respected" detail="Plans can adapt as life changes."/><Principle n="03" title="You stay in control" detail="Suggestions never act without consent."/></View>
-  </View><Text style={s.footer}>OMNIMIND · FOUNDATION BUILD  •  Your workspace is ready to grow.</Text>
- </PageFrame>;
+
+const C = {
+  bg: "#F8FAFC", white: "#FFFFFF", ink: "#172033", muted: "#8491A4",
+  border: "#E9EDF3", blue: "#397DEB", blueSoft: "#E8F1FF",
+  green: "#35BE62", greenSoft: "#E7F8EC", purple: "#9658E8",
+  purpleSoft: "#F1E8FF", teal: "#20AAA6", tealSoft: "#E3F7F6",
+};
+
+type MetricProps = { icon: string; label: string; value: string; hint: string; color: string; tint: string };
+
+export function PageFrame({ children }: { children: ReactNode }) {
+  const { width } = useWindowDimensions();
+  return <ScrollView style={s.scroll} contentContainerStyle={[s.content, { paddingHorizontal: width >= 900 ? 34 : 18 }]} showsVerticalScrollIndicator={false}>{children}</ScrollView>;
 }
-export function ModulePage({name,eyebrow,description,icon}:{name:string;eyebrow:string;description:string;icon:string}){
- return <PageFrame><View style={s.moduleHeading}><Text style={s.eyebrow}>{eyebrow}</Text><Text style={s.pageTitle}>{name}</Text><Text style={s.description}>{description}</Text></View>
-  <View style={s.moduleCard}><View style={s.moduleIcon}><Text style={{color:C.green,fontSize:23}}>{icon}</Text></View><Text style={s.status}>FOUNDATION IN PROGRESS</Text><Text style={s.moduleTitle}>{name} is being built thoughtfully.</Text><Text style={s.bodyText}>This area has its own route and is ready for its planned module. Real features and saved data will be introduced in the corresponding roadmap phase — no placeholder actions that pretend to work.</Text></View>
-  <Info icon="◇" title="Designed to work together" text="This module will connect to the same workspace and shared foundations."/><Info icon="⌁" title="Your data stays yours" text="Persistence and sync will be added only with the security model in place."/>
- </PageFrame>;
+
+export function Dashboard() {
+  const { width } = useWindowDimensions();
+  const wide = width >= 760;
+  return (
+    <PageFrame>
+      <View style={s.welcome} >
+        <Text style={s.welcomeTitle}>مرحباً بك</Text>
+        <Text style={s.welcomeSubtitle}>استمر في رحلتك نحو أهدافك</Text>
+      </View>
+
+      <View style={[s.metrics, wide && s.metricsWide]}>
+        <Metric icon="✓" label="المهام المكتملة" value="12" hint="من 18" color={C.green} tint={C.greenSoft} />
+        <Metric icon="▣" label="أهداف هذا الشهر" value="3" hint="من 5" color={C.purple} tint={C.purpleSoft} />
+        <Metric icon="♧" label="محادثات AI" value="8" hint="هذا الأسبوع" color={C.blue} tint={C.blueSoft} />
+        <Metric icon="◷" label="إجمالي الوقت" value="3" hint="هذا الأسبوع" color={C.teal} tint={C.tealSoft} />
+      </View>
+
+      <Text style={s.sectionTitle}>أقسام التطبيق</Text>
+      <View style={[s.sections, wide && s.sectionsWide]}>
+        <SectionCard icon="▣" title="المهام" color={C.blue} tint={C.blueSoft} />
+        <SectionCard icon="▦" title="التخطيط" color={C.purple} tint={C.purpleSoft} />
+        <SectionCard icon="◫" title="المعرفة" color={C.teal} tint={C.tealSoft} />
+        <SectionCard icon="▤" title="المشاريع" color={C.green} tint={C.greenSoft} />
+      </View>
+      <Text style={s.note}>الأرقام المعروضة حالياً تجريبية، وسيتم ربطها ببياناتك الفعلية تدريجياً.</Text>
+    </PageFrame>
+  );
 }
-function Metric({icon,label,hint,accent}:{icon:string;label:string;hint:string;accent:string}){return <View style={s.metric}><View style={s.metricHead}><Text style={{color:accent,fontSize:17}}>{icon}</Text><Text style={s.metricLabel}>{label}</Text></View><Text style={s.metricValue}>—</Text><Text style={s.small}>{hint}</Text></View>;}
-function Timeline({time,title,detail}:{time:string;title:string;detail:string}){return <View style={s.timeline}><View style={s.timelineMark}><View style={s.dot}/></View><View style={{flex:1}}><Text style={s.time}>{time}</Text><Text style={s.timelineTitle}>{title}</Text><Text style={s.timelineDetail}>{detail}</Text></View></View>;}
-function Tile({icon,title,detail}:{icon:string;title:string;detail:string}){return <View style={s.tile}><View style={s.tileIcon}><Text style={{color:C.green,fontSize:15}}>{icon}</Text></View><View style={{flex:1}}><Text style={s.tileTitle}>{title}</Text><Text style={s.tileDetail}>{detail}</Text></View><Text style={{color:C.green}}>↗</Text></View>;}
-function Principle({n,title,detail}:{n:string;title:string;detail:string}){return <View style={s.principle}><Text style={s.number}>{n}</Text><View style={{flex:1}}><Text style={s.principleTitle}>{title}</Text><Text style={s.principleDetail}>{detail}</Text></View></View>;}
-function Info({icon,title,text}:{icon:string;title:string;text:string}){return <View style={s.info}><Text style={{color:C.green,fontSize:19}}>{icon}</Text><View style={{flex:1}}><Text style={s.infoTitle}>{title}</Text><Text style={s.infoText}>{text}</Text></View></View>;}
-const s=StyleSheet.create({
- scroll:{flex:1},content:{width:"100%",maxWidth:1320,alignSelf:"center",paddingTop:32,paddingBottom:40},hero:{flexDirection:"row",alignItems:"center",gap:14,marginBottom:25},eyebrow:{color:C.blue,fontSize:9,fontWeight:"800",letterSpacing:1.5},heroTitle:{color:"#0B1220",fontSize:35,fontWeight:"800",letterSpacing:-1.2,marginTop:9},description:{color:C.muted,fontSize:12,lineHeight:19,marginTop:7},date:{width:58,height:64,backgroundColor:C.white,borderColor:C.border,borderWidth:1,borderRadius:14,alignItems:"center",justifyContent:"center"},dateLabel:{color:C.muted,fontSize:8,fontWeight:"800",letterSpacing:1},dateValue:{color:C.ink,fontSize:23,fontWeight:"800",marginTop:3},
- row:{flexDirection:"row",gap:13,alignItems:"stretch"},stack:{flexDirection:"column"},metric:{flex:1,minHeight:110,backgroundColor:C.white,borderWidth:1,borderColor:C.border,borderRadius:15,padding:16,marginBottom:14},metricHead:{flexDirection:"row",alignItems:"center",gap:9},metricLabel:{color:C.muted,fontSize:10,fontWeight:"600"},metricValue:{color:C.ink,fontSize:25,fontWeight:"800",marginTop:9},small:{color:C.muted,fontSize:9,marginTop:3},
- card:{flex:1,backgroundColor:C.white,borderWidth:1,borderColor:C.border,borderRadius:17,padding:20,minHeight:270},cardHead:{flexDirection:"row",alignItems:"center",justifyContent:"space-between"},cardTitle:{color:C.ink,fontSize:17,fontWeight:"800",marginTop:7},sun:{width:36,height:36,borderRadius:12,backgroundColor:C.mint,alignItems:"center",justifyContent:"center"},bodyText:{color:C.muted,fontSize:11,lineHeight:19,marginTop:13},priority:{flexDirection:"row",alignItems:"center",gap:11,backgroundColor:C.pale,borderWidth:1,borderColor:"#EDF2ED",borderRadius:12,padding:12,marginTop:19},plus:{width:31,height:31,borderRadius:10,backgroundColor:C.mint,alignItems:"center",justifyContent:"center"},priorityTitle:{color:C.ink,fontSize:10,fontWeight:"700"},meta:{flexDirection:"row",justifyContent:"space-between",marginTop:19},tiny:{color:C.muted,fontSize:8,letterSpacing:0.5},track:{height:5,backgroundColor:"#E5E7EB",borderRadius:5,marginTop:8},
- timeline:{flexDirection:"row",gap:12,marginTop:18},timelineMark:{width:28,height:28,borderRadius:10,backgroundColor:C.mint,alignItems:"center",justifyContent:"center"},dot:{width:7,height:7,borderRadius:4,backgroundColor:C.green},time:{color:C.purple,fontSize:8,fontWeight:"800",letterSpacing:1},timelineTitle:{color:C.ink,fontSize:10,fontWeight:"700",marginTop:3},timelineDetail:{color:C.muted,fontSize:9,lineHeight:14,marginTop:3},
- lower:{marginTop:15},tiles:{flexDirection:"row",flexWrap:"wrap",gap:10,marginTop:16},tile:{width:"48%",minHeight:62,borderWidth:1,borderColor:C.border,borderRadius:12,padding:10,flexDirection:"row",alignItems:"center",gap:8},tileIcon:{width:30,height:30,borderRadius:10,backgroundColor:C.mint,alignItems:"center",justifyContent:"center"},tileTitle:{color:C.ink,fontSize:10,fontWeight:"700"},tileDetail:{color:C.muted,fontSize:8,marginTop:3},
- principle:{flexDirection:"row",gap:11,marginTop:17},number:{color:C.purple,fontSize:9,fontWeight:"800"},principleTitle:{color:C.ink,fontSize:10,fontWeight:"700"},principleDetail:{color:C.muted,fontSize:9,marginTop:3},footer:{color:C.muted,fontSize:8,letterSpacing:0.5,marginTop:19},
- moduleHeading:{marginBottom:25},pageTitle:{color:C.ink,fontSize:32,fontWeight:"800",letterSpacing:-0.8,marginTop:9},moduleCard:{backgroundColor:C.white,borderWidth:1,borderColor:C.border,borderRadius:18,padding:24,alignItems:"flex-start",marginBottom:13},moduleIcon:{width:48,height:48,borderRadius:15,backgroundColor:C.mint,alignItems:"center",justifyContent:"center",marginBottom:17},status:{color:C.green,backgroundColor:C.mint,overflow:"hidden",borderRadius:6,paddingHorizontal:9,paddingVertical:5,fontSize:8,fontWeight:"800",letterSpacing:1},moduleTitle:{color:C.ink,fontSize:20,fontWeight:"800",marginTop:13,letterSpacing:-0.4},info:{flexDirection:"row",alignItems:"flex-start",gap:13,backgroundColor:C.white,borderWidth:1,borderColor:C.border,borderRadius:14,padding:16,marginTop:10},infoTitle:{color:C.ink,fontSize:11,fontWeight:"700"},infoText:{color:C.muted,fontSize:10,lineHeight:16,marginTop:4}
+
+function Metric({ icon, label, value, hint, color, tint }: MetricProps) {
+  return (
+    <View style={s.metric}>
+      <View style={[s.metricIcon, { backgroundColor: tint }]}><Text style={[s.metricIconText, { color }]}>{icon}</Text></View>
+      <View style={s.metricCopy}>
+        <Text style={s.metricLabel}>{label}</Text>
+        <View style={s.metricValueRow}><Text style={[s.metricValue, { color }]}>{value}</Text><Text style={s.metricHint}>{hint}</Text></View>
+      </View>
+    </View>
+  );
+}
+
+function SectionCard({ icon, title, color, tint }: { icon: string; title: string; color: string; tint: string }) {
+  return (
+    <View style={s.sectionCard}>
+      <View style={[s.sectionIcon, { backgroundColor: tint }]}><Text style={[s.sectionIconText, { color }]}>{icon}</Text></View>
+      <Text style={s.sectionCardTitle}>{title}</Text>
+    </View>
+  );
+}
+
+export function ModulePage({ name, eyebrow, description, icon }: { name: string; eyebrow: string; description: string; icon: string }) {
+  return <PageFrame>
+    <View style={s.moduleHeading}>
+      <Text style={s.moduleEyebrow}>{eyebrow}</Text>
+      <Text style={s.moduleTitle}>{name}</Text>
+      <Text style={s.moduleDescription}>{description}</Text>
+    </View>
+    <View style={s.moduleCard}>
+      <View style={s.moduleIcon}><Text style={{ color: C.blue, fontSize: 25 }}>{icon}</Text></View>
+      <Text style={s.moduleStatus}>قيد التطوير</Text>
+      <Text style={s.moduleCardTitle}>نعمل على تجهيز قسم {name}</Text>
+      <Text style={s.moduleDescription}>سيتم بناء وظائف هذا القسم وربطها ببقية مساحة العمل ضمن مراحل التطوير المعتمدة.</Text>
+    </View>
+  </PageFrame>;
+}
+
+const s = StyleSheet.create({
+  scroll: { flex: 1 },
+  content: { width: "100%", maxWidth: 920, alignSelf: "center", paddingTop: 23, paddingBottom: 28 },
+  welcome: { alignItems: "flex-end", marginBottom: 25, paddingHorizontal: 2 },
+  welcomeTitle: { color: C.ink, fontSize: 27, fontWeight: "800", textAlign: "right" },
+  welcomeSubtitle: { color: C.muted, fontSize: 15, fontWeight: "600", marginTop: 9, textAlign: "right" },
+  metrics: { gap: 12 },
+  metricsWide: { flexDirection: "row", flexWrap: "wrap" },
+  metric: { minHeight: 112, width: "100%", backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 19, paddingHorizontal: 17, paddingVertical: 15, flexDirection: "row", alignItems: "center", gap: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  metricIcon: { width: 66, height: 66, borderRadius: 33, alignItems: "center", justifyContent: "center" },
+  metricIconText: { fontSize: 29, fontWeight: "800" },
+  metricCopy: { flex: 1, alignItems: "flex-end" },
+  metricLabel: { color: "#536176", fontSize: 14, fontWeight: "700", textAlign: "right" },
+  metricValueRow: { flexDirection: "row", alignItems: "baseline", gap: 8, marginTop: 4 },
+  metricValue: { fontSize: 31, fontWeight: "800" },
+  metricHint: { color: C.muted, fontSize: 12, fontWeight: "600" },
+  sectionTitle: { color: C.ink, fontSize: 21, fontWeight: "800", textAlign: "right", marginTop: 29, marginBottom: 14 },
+  sections: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 12 },
+  sectionsWide: { justifyContent: "flex-start", gap: 14 },
+  sectionCard: { width: "48.3%", minHeight: 142, backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 18, alignItems: "center", justifyContent: "center", padding: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  sectionIcon: { width: 67, height: 67, borderRadius: 34, alignItems: "center", justifyContent: "center", marginBottom: 10 },
+  sectionIconText: { fontSize: 29, fontWeight: "800" },
+  sectionCardTitle: { color: "#536176", fontSize: 15, fontWeight: "800" },
+  note: { color: "#9AA5B4", fontSize: 10, textAlign: "center", marginTop: 18, lineHeight: 16 },
+  moduleHeading: { alignItems: "flex-end", marginBottom: 22 },
+  moduleEyebrow: { color: C.blue, fontSize: 10, fontWeight: "800" },
+  moduleTitle: { color: C.ink, fontSize: 29, fontWeight: "800", marginTop: 8, textAlign: "right" },
+  moduleDescription: { color: C.muted, fontSize: 13, lineHeight: 21, marginTop: 8, textAlign: "right" },
+  moduleCard: { backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 19, padding: 22, alignItems: "flex-end" },
+  moduleIcon: { width: 52, height: 52, borderRadius: 16, backgroundColor: C.blueSoft, alignItems: "center", justifyContent: "center", marginBottom: 15 },
+  moduleStatus: { color: C.blue, backgroundColor: C.blueSoft, borderRadius: 7, overflow: "hidden", paddingHorizontal: 10, paddingVertical: 6, fontSize: 10, fontWeight: "800" },
+  moduleCardTitle: { color: C.ink, fontSize: 18, fontWeight: "800", marginTop: 13, textAlign: "right" },
 });

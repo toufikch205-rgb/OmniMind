@@ -1,4 +1,4 @@
-import ProjectsScreen from "../../src/features/projects/screens/ProjectsScreen";
+import { ProjectsScreen } from "../../src/features/projects";
 
 export default function ProjectsRoute() {
   return <ProjectsScreen />;

@@ -19,7 +19,8 @@
       "package": "app.omnimind.client"
     },
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": true,
+      "baseUrl": "/OmniMind"
     },
     "plugins": [
       "expo-router"

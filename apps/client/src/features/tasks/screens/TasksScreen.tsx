@@ -10,6 +10,7 @@ export default function TasksScreen() {
   const [selected, setSelected] = useState("");
   const [editorOpen, setEditorOpen] = useState(false);
   const [ready, setReady] = useState(false);
+  const [saveLabel, setSaveLabel] = useState("حفظ");
 
   useEffect(() => {
     const initial = loadPages();
@@ -86,6 +87,11 @@ export default function TasksScreen() {
     if (block) updateBlock(id, { done: !block.done });
   };
 
+  const saveCurrentPage = () => {
+    savePages(pages);
+    setSaveLabel("تم الحفظ ✓");
+  };
+
   const removePage = () => {
     if (!current || pages.length === 1) return;
     const remove = (list: TaskPage[]): TaskPage[] =>
@@ -105,25 +111,38 @@ export default function TasksScreen() {
         <View style={s.topBar}>
           <Pressable accessibilityRole="button" accessibilityLabel="إغلاق الصفحة والعودة" onPress={() => setEditorOpen(false)} style={s.closeButton}>
             <Text style={s.closeGlyph}>×</Text>
-            <Text style={s.closeLabel}>إغلاق الصفحة</Text>
           </Pressable>
-          <Text style={s.topHint}>مساحة تحرير مستقلة</Text>
+          <TextInput
+            value={current.title}
+            onChangeText={(title) => {
+              setSaveLabel("حفظ");
+              setPages((old) => updateTree(old, current.id, (page) => ({ ...page, title })));
+            }}
+            placeholder="عنوان الصفحة"
+            placeholderTextColor="#AAB3C0"
+            style={s.headerTitle}
+            textAlign="right"
+            returnKeyType="done"
+          />
+          <View style={s.topActions}>
+            {current.id !== "inbox" && pages.length > 1 ? (
+              <Pressable accessibilityRole="button" accessibilityLabel="حذف الصفحة" onPress={removePage} style={s.deleteTopButton}>
+                <Text style={s.deleteTopText}>حذف</Text>
+              </Pressable>
+            ) : null}
+            <Pressable accessibilityRole="button" accessibilityLabel="حفظ الصفحة" onPress={saveCurrentPage} style={s.saveButton}>
+              <Text style={s.saveButtonText}>{saveLabel}</Text>
+            </Pressable>
+          </View>
         </View>
 
         <View style={s.toolbarArea}>
-          <InsertToolbar onInsert={insertBlock} />
+          <InsertToolbar onInsert={(type) => { setSaveLabel("حفظ"); insertBlock(type); }} />
         </View>
 
         <ScrollView style={s.canvasScroll} contentContainerStyle={s.canvasContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
           <View style={s.canvas}>
-            <TextInput
-              value={current.title}
-              onChangeText={(title) => setPages((old) => updateTree(old, current.id, (page) => ({ ...page, title })))}
-              placeholder="عنوان الصفحة"
-              placeholderTextColor="#C1C8D2"
-              style={s.titleInput}
-              textAlign="right"
-            />
+
             {taskCount > 0 ? <Text style={s.pageMeta}>{taskCount} مهام · {doneCount} مكتملة</Text> : null}
 
             {current.blocks.map((block) => (
@@ -145,10 +164,7 @@ export default function TasksScreen() {
               </View>
             ) : null}
 
-            <Pressable onPress={() => createPage(current.id)} style={s.subPageButton}>
-              <Text style={s.subPageText}>＋ إضافة صفحة فرعية</Text>
-            </Pressable>
-            {current.id !== "inbox" && pages.length > 1 ? <Pressable onPress={removePage} style={s.deletePage}><Text style={s.deleteText}>حذف الصفحة</Text></Pressable> : null}
+
           </View>
         </ScrollView>
       </View>
@@ -182,28 +198,27 @@ export default function TasksScreen() {
 
 const s = StyleSheet.create({
   fullEditor: { flex: 1, minHeight: 0, width: "100%", backgroundColor: "#FFFFFF" },
-  topBar: { height: 54, paddingHorizontal: 14, borderBottomWidth: 1, borderBottomColor: "#EEF1F5", flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-between", backgroundColor: "#FFFFFF" },
-  closeButton: { minHeight: 40, flexDirection: "row-reverse", alignItems: "center", gap: 5, paddingHorizontal: 8, borderRadius: 8, backgroundColor: "#F5F7FA" },
-  closeGlyph: { color: "#526176", fontSize: 23, lineHeight: 25 },
-  closeLabel: { color: "#536176", fontSize: 11, fontWeight: "700" },
-  topHint: { color: "#A0AABA", fontSize: 10 },
-  toolbarArea: { paddingHorizontal: 14, backgroundColor: "#FFFFFF" },
+  topBar: { minHeight: 58, paddingHorizontal: 12, flexDirection: "row-reverse", alignItems: "center", gap: 9, backgroundColor: "#FFFFFF", borderBottomWidth: 1, borderBottomColor: "#F1F3F6" },
+  closeButton: { width: 36, height: 36, alignItems: "center", justifyContent: "center", borderRadius: 18, backgroundColor: "#F5F7FA" },
+  closeGlyph: { color: "#526176", fontSize: 25, lineHeight: 28 },
+  headerTitle: { flex: 1, minWidth: 60, height: 42, color: "#172033", fontSize: 18, fontWeight: "800", paddingHorizontal: 3, paddingVertical: 5 },
+  topActions: { flexDirection: "row-reverse", alignItems: "center", gap: 7 },
+  saveButton: { minHeight: 36, minWidth: 58, paddingHorizontal: 12, alignItems: "center", justifyContent: "center", borderRadius: 9, backgroundColor: "#22C55E" },
+  saveButtonText: { color: "#FFFFFF", fontSize: 11, fontWeight: "800" },
+  deleteTopButton: { minHeight: 36, paddingHorizontal: 10, alignItems: "center", justifyContent: "center", borderRadius: 9, backgroundColor: "#FFF1F2" },
+  deleteTopText: { color: "#D64555", fontSize: 11, fontWeight: "700" },
+  toolbarArea: { paddingHorizontal: 10, backgroundColor: "#FFFFFF" },
   canvasScroll: { flex: 1, backgroundColor: "#FFFFFF" },
-  canvasContent: { flexGrow: 1, paddingHorizontal: 18, paddingTop: 25, paddingBottom: 70 },
+  canvasContent: { flexGrow: 1, paddingHorizontal: 18, paddingTop: 16, paddingBottom: 70 },
   canvas: { width: "100%", maxWidth: 900, alignSelf: "center", minHeight: 500, backgroundColor: "#FFFFFF" },
-  titleInput: { width: "100%", minHeight: 55, color: "#172033", fontSize: 27, fontWeight: "800", paddingVertical: 8, paddingHorizontal: 2 },
   pageMeta: { color: "#A0AABA", fontSize: 10, textAlign: "right", marginBottom: 8 },
-  emptyHint: { alignItems: "center", paddingTop: 85, paddingHorizontal: 20, gap: 8 },
+  emptyHint: { alignItems: "center", paddingTop: 70, paddingHorizontal: 20, gap: 8 },
   emptyTitle: { color: "#B0B9C6", fontSize: 14, fontWeight: "700" },
   emptyText: { color: "#C0C7D1", fontSize: 11, textAlign: "center", lineHeight: 19 },
-  childPage: { minHeight: 44, flexDirection: "row-reverse", alignItems: "center", gap: 9, borderBottomWidth: 1, borderBottomColor: "#F1F3F6" },
+  childPage: { minHeight: 44, flexDirection: "row-reverse", alignItems: "center", gap: 9 },
   childEmoji: { fontSize: 16 },
   childTitle: { flex: 1, color: "#397DEB", textAlign: "right", fontSize: 12, fontWeight: "700" },
   childArrow: { color: "#9AA5B4", fontSize: 22 },
-  subPageButton: { alignSelf: "flex-end", paddingVertical: 14, paddingHorizontal: 5 },
-  subPageText: { color: "#397DEB", fontSize: 11, fontWeight: "700" },
-  deletePage: { alignSelf: "flex-end", padding: 10 },
-  deleteText: { color: "#D65C65", fontSize: 10 },
   listScreen: { flex: 1, minHeight: 0, width: "100%", backgroundColor: "#FFFFFF", paddingHorizontal: 18, paddingTop: 22 },
   listHeader: { flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-between", marginBottom: 16 },
   listTitle: { color: "#172033", fontSize: 21, fontWeight: "800" },

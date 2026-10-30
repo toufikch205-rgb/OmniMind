@@ -1,29 +1,61 @@
 # Module Structure
 
-The client uses a feature-first structure. Expo Router files are route adapters only; each feature owns its screen and feature-specific implementation.
+OmniMind is a pnpm monorepo with an Expo Router client and framework-independent shared packages. The repository uses feature-first organization: route files adapt URLs to feature screens; reusable workspace chrome lives outside features; feature behavior stays within its owning feature.
 
-## Current client structure
+## Repository structure
+
+```text
+OmniMind/
+  apps/
+    client/
+      app/                         # Expo Router route adapters and layouts only
+      src/
+        components/
+          navigation/              # Shared navigation components
+          workspace/               # Shared workspace shell components
+        features/
+          home/
+          tasks/
+          planning/
+          knowledge/
+          projects/
+  packages/
+    core/                           # Platform-independent domain primitives
+    data/                           # Repository contracts and data boundaries
+    design-tokens/                  # Shared visual tokens
+  docs/
+    architecture/
+    engineering/
+    standards/
+  .github/workflows/                # CI and deployment automation
+```
+
+## Client structure
 
 ```text
 apps/client/
   app/
-    _layout.tsx                 # Root navigation shell
-    index.tsx                   # Redirect to workspace
+    _layout.tsx                     # Root Expo Router layout
+    index.tsx                       # Initial redirect
     (workspace)/
-      _layout.tsx               # Shared workspace shell and navigation
-      index.tsx                 # Home route adapter
-      tasks.tsx                 # Tasks route adapter
-      planning.tsx              # Planning route adapter
-      knowledge.tsx             # Knowledge route adapter
-      projects.tsx              # Projects route adapter
+      _layout.tsx                   # Composition of workspace shell
+      index.tsx                     # Home route adapter
+      tasks.tsx                     # Tasks route adapter
+      planning.tsx                  # Planning route adapter
+      knowledge.tsx                 # Knowledge route adapter
+      projects.tsx                  # Projects route adapter
   src/
-    components/                 # Reusable presentation components
-      AppIcon.tsx
-      PageFrame.tsx
-      ModulePage.tsx
+    components/
+      AppIcon.tsx                   # Shared icon primitives
+      PageFrame.tsx                 # Shared page container
+      ModulePage.tsx                # Shared placeholder presentation
+      navigation/
+        WorkspaceNavigation.tsx     # Navigation model and NavItem
+      workspace/
+        WorkspaceHeader.tsx         # Workspace top header
     features/
       home/
-        index.ts                # Public feature API
+        index.ts                    # Public feature API
         screens/HomeScreen.tsx
       tasks/
         index.ts
@@ -42,40 +74,51 @@ apps/client/
         screens/ProjectsScreen.tsx
 ```
 
-## Rules
+## Architectural boundaries
 
-- Files under `app/` define routes and layout only. They should not contain feature UI or business logic.
-- A route imports a feature through its public `index.ts`; it must not reach into private feature implementation paths.
-- A feature owns its screen, components, hooks, services, types and storage as those are needed. Do not create empty folders in advance.
-- Shared UI belongs in `src/components/` only when it is genuinely reusable by more than one feature.
-- Keep feature-specific components inside that feature. Avoid a large shared file containing unrelated screens.
-- Move code without changing its behavior first; refactor behavior separately, with tests.
-- Preserve existing route paths when moving screens so navigation and deep links remain stable.
+- `app/` is reserved for Expo Router routes and layouts. It is not a conventional static website entry folder.
+- Expo's web export generates the web HTML entry; do not add a parallel hand-written `index.html` for TSX routes.
+- Route adapters import screens through the owning feature's public `index.ts`.
+- Feature internals are private to that feature. Cross-feature imports must use public APIs.
+- `src/components/` contains presentation primitives reused across multiple screens or workspace shell areas.
+- Navigation configuration and workspace chrome are separate from route composition.
+- `packages/core`, `packages/data`, and `packages/design-tokens` must remain platform-independent. Do not import React Native, Expo, browser globals, or app feature code into them.
+- Add domain, application, infrastructure, hooks, services and tests layers when actual complexity requires them; do not create empty folders just to satisfy a template.
 
-## Target module layering
+## Feature ownership
 
-As a feature gains domain and application complexity, evolve it toward this structure without forcing empty layers into simple screens:
+Each feature owns its screens, feature-specific components, state, types, persistence adapters and tests. Current modules:
+
+- **Home** — workspace overview and entry points.
+- **Tasks** — page tree, blocks, editor and local persistence.
+- **Planning** — planned roadmap module; current screen is a placeholder.
+- **Knowledge** — planned roadmap module; current screen is a placeholder.
+- **Projects** — workspace placeholder, not a completed roadmap capability.
+
+## Safe refactoring protocol
+
+1. Inspect imports and runtime ownership before moving a file.
+2. Move one coherent responsibility at a time.
+3. Preserve route paths, persisted storage keys and user-visible behavior.
+4. Update imports and public feature exports in the same change.
+5. Run TypeScript validation and the web export before treating a refactor as complete.
+6. Remove obsolete files only after repository-wide import searches show no consumers.
+7. Keep behavior changes separate from structural refactors.
+
+## Target feature layering
 
 ```text
-<feature-name>/
-  domain/          # Entities, value objects and policies; no UI framework imports
+<feature>/
+  domain/          # Entities, value objects and business policies
   application/     # Use cases, commands, queries and ports
-  infrastructure/ # Repository and platform adapter implementations
-  screens/         # Route-level presentation screens
-  components/      # Feature-specific UI
-  hooks/           # Feature-specific state and lifecycle logic
-  services/        # Feature orchestration and integrations
+  infrastructure/  # Persistence and platform adapters
+  screens/         # Feature screens
+  components/      # Feature-owned UI
+  hooks/           # Feature state and lifecycle logic
+  services/        # Feature orchestration
   tests/           # Feature tests
-  types.ts         # Feature contracts when needed
-  index.ts         # Public feature API
+  types.ts         # Feature contracts
+  index.ts         # Public API
 ```
 
-Rules:
-- A feature owns its business rules and internal implementation.
-- Other features import only its public `index.ts` API.
-- Cross-feature workflows are coordinated by application services, not by reaching into another feature's internals.
-- Shared code belongs in a shared package only when at least two features genuinely need it.
-- Keep browser, Android and iOS integrations in platform adapters and expose stable ports to application logic.
-- Do not create empty feature modules ahead of their roadmap phase.
-
-This structure supports the roadmap modules: Tasks, Planning, Notes, Knowledge, Study, Focus and AI.
+The target is evolutionary, not a requirement to introduce unused abstractions. The roadmap remains the authority for when future modules are implemented.

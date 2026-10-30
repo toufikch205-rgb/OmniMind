@@ -53,7 +53,7 @@ export default function WorkspaceLayout() {
         <View style={s.page}><Stack screenOptions={{ headerShown: false, animation: "fade", contentStyle: { backgroundColor: C.bg } }} /></View>
       </View>
 
-      {(immersive || (!desktop && !tablet)) ? <View style={s.bottom}>{items.map(i => <NavItem key={i.path} item={i} compact active={selected === i.path} onPress={() => go(i.path)} />)}</View> : null}
+      <View style={s.bottom}>{items.map(i => <NavItem key={i.path} item={i} compact active={selected === i.path} onPress={() => go(i.path)} />)}</View>
     </View>
   );
 }
@@ -71,7 +71,7 @@ const s = StyleSheet.create({
   bellWrap: { width: 34, height: 38, alignItems: "center", justifyContent: "center" },
   bell: { color: "#526174", fontSize: 25, fontWeight: "700" },
   notificationDot: { position: "absolute", top: 6, right: 4, width: 8, height: 8, borderRadius: 4, backgroundColor: "#F18B8B" },
-  body: { flex: 1, flexDirection: "row", width: "100%", maxWidth: 1600, alignSelf: "center" },
+  body: { flex: 1, flexDirection: "row", width: "100%", maxWidth: 1600, alignSelf: "center", paddingBottom: 76 },
   sidebar: { width: 230, paddingHorizontal: 17, paddingTop: 28, borderRightWidth: 1, borderRightColor: C.border, backgroundColor: "#FBFCFE" },
   section: { color: C.muted, fontSize: 11, fontWeight: "800", textAlign: "right", marginRight: 12, marginBottom: 14 },
   navItem: { minHeight: 47, borderRadius: 11, paddingHorizontal: 12, marginBottom: 5, flexDirection: "row-reverse", alignItems: "center", gap: 12, position: "relative" },
@@ -83,7 +83,7 @@ const s = StyleSheet.create({
   page: { flex: 1, minWidth: 0 },
   tablet: { height: 58, backgroundColor: C.surface, borderBottomWidth: 1, borderBottomColor: C.border },
   tabletInner: { alignItems: "center", paddingHorizontal: 16, gap: 7 },
-  bottom: { height: 76, paddingHorizontal: 4, paddingBottom: 5, backgroundColor: C.surface, borderTopWidth: 1, borderTopColor: C.border, flexDirection: "row", justifyContent: "space-around", alignItems: "center" },
+  bottom: { position: "absolute", zIndex: 1000, elevation: 20, left: 0, right: 0, bottom: 0, height: 76, paddingHorizontal: 4, paddingBottom: 5, backgroundColor: C.surface, borderTopWidth: 1, borderTopColor: C.border, flexDirection: "row", justifyContent: "space-around", alignItems: "center" },
   mobileItem: { minWidth: 58, flex: 1, height: 66, flexDirection: "column", gap: 5, justifyContent: "center", alignItems: "center" },
   mobileActive: { backgroundColor: "transparent" },
   mobileIcon: { height: 28, alignItems: "center", justifyContent: "center" },

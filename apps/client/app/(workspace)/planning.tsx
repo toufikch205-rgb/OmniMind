@@ -1,4 +1,4 @@
-import PlanningScreen from "../../src/features/planning/screens/PlanningScreen";
+import { PlanningScreen } from "../../src/features/planning";
 
 export default function PlanningRoute() {
   return <PlanningScreen />;

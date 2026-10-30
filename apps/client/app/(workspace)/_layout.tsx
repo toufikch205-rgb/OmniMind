@@ -19,8 +19,6 @@ function NavItem({item,active,compact,onPress}:{item:typeof items[number];active
 export default function WorkspaceLayout(){
  const {width}=useWindowDimensions(); const router=useRouter(); const pathname=usePathname();
  const desktop=width>=1024, tablet=width>=700&&width<1024;
- const active=items.find(i=>i.path===" /(workspace)"?false:pathname.endsWith(i.path.split("/").pop()!))?.path
-   ?? (pathname.endsWith("/tasks")?"":null);
  const selected=pathname.endsWith("/tasks")?items[1].path:pathname.endsWith("/planning")?items[2].path:pathname.endsWith("/knowledge")?items[3].path:pathname.endsWith("/projects")?items[4].path:items[0].path;
  const go=(path:string)=>router.push(path as never);
  return <View style={s.app}>

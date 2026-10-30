@@ -31,9 +31,11 @@ export function TaskBlock({ block, onChange, onDelete, onToggle }: Props) {
             <View key={rowIndex} style={styles.tableRow}>
               {row.map((cell, cellIndex) => (
                 <TextInput key={cellIndex} value={cell} onChangeText={(text) => {
-                  const rows = (block.rows ?? [["", ""], ["", ""]]).map((r) => [...r]);
-                  const targetRow = rows[rowIndex];
-                  if (targetRow) targetRow[cellIndex] = text;
+                  const rows = (block.rows ?? [["", ""], ["", ""]]).map((row, currentRow) =>
+                    currentRow === rowIndex
+                      ? row.map((cell, currentCell) => currentCell === cellIndex ? text : cell)
+                      : [...row],
+                  );
                   onChange({ rows });
                 }} placeholder="..." placeholderTextColor="#A0AABA" style={styles.cell} />
               ))}

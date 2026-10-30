@@ -27,12 +27,13 @@ export default function WorkspaceLayout() {
   const pathname = usePathname();
   const desktop = width >= 1024;
   const tablet = width >= 700 && width < 1024;
+  const immersive = pathname.endsWith("/tasks");
   const selected = pathname.endsWith("/tasks") ? items[1].path : pathname.endsWith("/planning") ? items[2].path : pathname.endsWith("/knowledge") ? items[3].path : pathname.endsWith("/projects") ? items[4].path : items[0].path;
   const go = (path: string) => router.push(path as never);
 
   return (
     <View style={s.app}>
-      <View style={s.header}>
+      {!immersive ? <View style={s.header}>
         <Pressable accessibilityRole="button" accessibilityLabel="فتح القائمة" style={s.menuButton}>
           <Text style={s.menuGlyph}>☰</Text>
         </Pressable>
@@ -43,16 +44,16 @@ export default function WorkspaceLayout() {
         <View style={s.headerRight}>
           <View style={s.bellWrap}><AppIcon name="bell" color="#526174" size={23} /><View style={s.notificationDot} /></View>
         </View>
-      </View>
+      </View> : null}
 
-      {tablet ? <View style={s.tablet}><ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.tabletInner}>{items.map(i => <NavItem key={i.path} item={i} active={selected === i.path} onPress={() => go(i.path)} />)}</ScrollView></View> : null}
+      {!immersive && tablet ? <View style={s.tablet}><ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.tabletInner}>{items.map(i => <NavItem key={i.path} item={i} active={selected === i.path} onPress={() => go(i.path)} />)}</ScrollView></View> : null}
 
       <View style={s.body}>
-        {desktop ? <View style={s.sidebar}><Text style={s.section}>مساحة العمل</Text>{items.map(i => <NavItem key={i.path} item={i} active={selected === i.path} onPress={() => go(i.path)} />)}</View> : null}
+        {desktop && !immersive ? <View style={s.sidebar}><Text style={s.section}>مساحة العمل</Text>{items.map(i => <NavItem key={i.path} item={i} active={selected === i.path} onPress={() => go(i.path)} />)}</View> : null}
         <View style={s.page}><Stack screenOptions={{ headerShown: false, animation: "fade", contentStyle: { backgroundColor: C.bg } }} /></View>
       </View>
 
-      {!desktop && !tablet ? <View style={s.bottom}>{items.map(i => <NavItem key={i.path} item={i} compact active={selected === i.path} onPress={() => go(i.path)} />)}</View> : null}
+      {!immersive && !desktop && !tablet ? <View style={s.bottom}>{items.map(i => <NavItem key={i.path} item={i} compact active={selected === i.path} onPress={() => go(i.path)} />)}</View> : null}
     </View>
   );
 }

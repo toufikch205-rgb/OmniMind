@@ -1,2 +1,5 @@
-import { Dashboard } from "../../src/components/WorkspaceViews";
-export default function OverviewRoute(){return <Dashboard/>;}
+import HomeScreen from "../../src/features/home/screens/HomeScreen";
+
+export default function OverviewRoute() {
+  return <HomeScreen />;
+}

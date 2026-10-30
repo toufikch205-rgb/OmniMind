@@ -104,7 +104,8 @@ const s = StyleSheet.create({
   metrics: { gap: 12 },
   metricsWide: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 12 },
   metric: { minHeight: 112, width: "100%", backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 19, paddingHorizontal: 17, paddingVertical: 15, flexDirection: "row", alignItems: "center", gap: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  metricWide: { width: "48.5%" },\n  metricIcon: { width: 62, height: 62, borderRadius: 33, alignItems: "center", justifyContent: "center" },
+  metricWide: { width: "48.5%" },
+  metricIcon: { width: 62, height: 62, borderRadius: 33, alignItems: "center", justifyContent: "center" },
   
   metricCopy: { flex: 1, alignItems: "flex-end" },
   metricLabel: { color: "#536176", fontSize: 13, fontWeight: "700", textAlign: "right" },
@@ -115,7 +116,8 @@ const s = StyleSheet.create({
   sections: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 12 },
   sectionsWide: { justifyContent: "space-between", gap: 0 },
   sectionCard: { width: "48.3%", minHeight: 148, backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 18, alignItems: "center", justifyContent: "center", padding: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  sectionCardWide: { width: "23.5%" },\n  sectionIcon: { width: 62, height: 62, borderRadius: 34, alignItems: "center", justifyContent: "center", marginBottom: 10 },
+  sectionCardWide: { width: "23.5%" },
+  sectionIcon: { width: 62, height: 62, borderRadius: 34, alignItems: "center", justifyContent: "center", marginBottom: 10 },
   
   sectionCardTitle: { color: "#536176", fontSize: 14, fontWeight: "800" },
   note: { color: "#9AA5B4", fontSize: 10, textAlign: "center", marginTop: 18, lineHeight: 16 },

@@ -11,6 +11,9 @@
     "web": "pnpm --filter @omnimind/client web",
     "android": "pnpm --filter @omnimind/client android",
     "ios": "pnpm --filter @omnimind/client ios",
-    "typecheck": "pnpm --filter @omnimind/client typecheck"
+    "typecheck": "pnpm -r --if-present typecheck"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
   }
 }

@@ -1,6 +1,6 @@
 # Backend and Data Architecture Evaluation
 
-Status: evaluation only — no provider has been selected or connected.
+Status: **Decision recorded** — see [ADR 0002](./decisions/0002-backend-identity-offline-baseline.md). This document preserves the alternatives and rationale; ADR 0002 is authoritative where they differ.
 
 ## Product requirements
 
@@ -8,61 +8,65 @@ OmniMind needs:
 - A relational model for users, workspaces, projects, tasks, plans, notes, links and study content.
 - Account identity shared by Web, Android and iOS.
 - Strict per-user and per-workspace authorization.
-- Realtime updates across signed-in devices.
-- File and attachment storage with private access.
-- A path to offline-first operation, including a local database and explicit conflict handling.
-- Export, backup and account deletion workflows.
+- Realtime notifications/updates across signed-in devices.
+- Private file and attachment storage.
+- Offline-first operation with local persistence, durable queued writes and explicit conflict handling.
+- Export, backup/restore and account deletion workflows.
 - No privileged server credentials in client applications.
 
-## Shortlisted approaches
+## Evaluated approaches
 
-### Supabase (Postgres platform)
+### Supabase with PostgreSQL — selected initial direction
+
 Strengths:
 - Relational PostgreSQL model fits connected planning, tasks, documents and knowledge links.
 - Integrated authentication, database APIs, realtime and object storage reduce infrastructure sprawl.
 - Row Level Security can enforce tenant and ownership boundaries at the database layer.
 
 Trade-offs:
-- Offline-first behavior is not automatic; OmniMind still needs a local persistence layer, an outbox/sync protocol and conflict-resolution rules.
-- RLS policies, storage policies and privileged server operations require careful security design and automated tests.
-- Realtime should be treated as a notification/update channel, not as a replacement for durable sync.
+- Offline-first behavior is not automatic; OmniMind must build and test local persistence, an outbox/sync protocol and conflict resolution.
+- RLS, storage policies and privileged server operations require careful design and automated tests.
+- Realtime is a notification/update channel, not a replacement for durable synchronization.
 
-### Firebase (Firestore platform)
+### Firebase / Firestore — evaluated, not selected
+
 Strengths:
 - Mature client SDK ecosystem and built-in local persistence/synchronization patterns for supported clients.
-- Authentication and supporting cloud services are integrated.
+- Integrated authentication and supporting cloud services.
 
 Trade-offs:
-- Firestore is document-oriented; complex relational queries, cross-linked knowledge and reporting may require denormalization and additional design.
+- Document-oriented modeling can require denormalization for interconnected knowledge and reporting.
 - Security rules and query constraints need careful alignment.
-- Cross-platform offline behavior and data consistency must be tested against the exact client SDKs and product requirements.
+- Offline behavior and consistency must be tested against exact client SDKs and requirements.
 
-### Custom PostgreSQL backend
+### Custom PostgreSQL backend — evaluated, not selected
+
 Strengths:
 - Maximum control over domain APIs, transactions, sync protocol and deployment.
-- Relational model and authorization behavior can be tailored to OmniMind.
 
 Trade-offs:
 - Highest engineering and operational burden: authentication, APIs, realtime, storage, backups, monitoring and security all need to be built or integrated.
 - Slower path to a reliable first release.
 
-## Provisional direction (not an approved decision)
+## Approved direction
 
-Supabase + PostgreSQL is the strongest initial candidate because OmniMind's data is highly relational and needs consistent cross-platform identity, authorization and realtime behavior. This is only a recommendation for evaluation, not permission to connect a project or create tables.
+ADR 0002 selects Supabase with PostgreSQL as the initial managed backend direction, personal workspaces for the first release, email/password with verified email as the initial authentication method, and read/create/edit offline for core personal data using local SQLite and a durable outbox.
 
-Regardless of provider, the architecture should keep:
-1. Domain models and use-cases provider-independent.
-2. Remote persistence behind repository interfaces.
-3. A local SQLite-backed store behind a separate local persistence adapter.
-4. A sync engine with an outbox, stable operation IDs, retry/idempotency, version checks and documented conflict policies.
-5. Authorization enforced by the backend; client-side checks are UX only.
-6. Migrations, backup/restore and export tested before production data is introduced.
+The selection does not authorize immediate production setup. Schema, RLS, storage policies, authentication lifecycle, sync protocol and conflict UX require separate reviewed designs and tests before implementation.
 
-## Decisions required before implementation
+## Architecture constraints
 
-- Approve a backend direction (Supabase, Firebase, or custom backend).
-- Define whether workspaces can be shared with other users in the first release.
-- Define the first-release offline promise: read-only cached access, or create/edit offline with later synchronization.
-- Choose the initial authentication methods (email/password, magic link, Google/Apple, or a staged combination).
+Regardless of provider:
+1. Domain models and use-cases remain provider-independent.
+2. Remote persistence sits behind repository and service ports.
+3. A local SQLite-backed store sits behind a separate local persistence adapter.
+4. Sync uses stable operation IDs, retries, idempotency, version checks and documented conflict policies.
+5. Authorization is enforced by the backend; client checks are UX only.
+6. Migrations, backup/restore, export and deletion are tested before production data is introduced.
+7. No privileged server key is embedded in a client build.
 
-No provider SDK, credentials, production schema or security policies should be added until these decisions are approved.
+## Official product documentation to consult during implementation
+
+- https://supabase.com/docs
+- https://www.postgresql.org/docs/
+- https://www.sqlite.org/docs.html

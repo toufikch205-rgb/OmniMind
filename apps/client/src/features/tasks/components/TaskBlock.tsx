@@ -65,7 +65,7 @@ export function TaskBlock({ block, onChange, onDelete, onToggle }: Props) {
 
 const styles = StyleSheet.create({
   block: { minHeight: 42, flexDirection: "row-reverse", alignItems: "flex-start", gap: 8, paddingVertical: 5, backgroundColor: "#FFFFFF" },
-  input: { flex: 1, minWidth: 0, color: "#263244", fontSize: 14, lineHeight: 24, paddingVertical: 5, paddingHorizontal: 2, textAlignVertical: "center", backgroundColor: "#FFFFFF", borderWidth: 0 },
+  input: { flex: 1, minWidth: 0, color: "#263244", fontSize: 14, lineHeight: 24, paddingVertical: 5, paddingHorizontal: 2, textAlignVertical: "top", backgroundColor: "transparent", borderWidth: 0, borderColor: "transparent", borderRadius: 0, outlineWidth: 0, outlineColor: "transparent", shadowColor: "transparent", elevation: 0 },
   heading: { fontSize: 21, lineHeight: 30, fontWeight: "800", color: "#172033", paddingTop: 10, paddingBottom: 8 },
   completed: { color: "#9AA5B4", textDecorationLine: "line-through" },
   checkbox: { width: 19, height: 19, marginTop: 8, borderWidth: 1.5, borderColor: "#B8C3D1", borderRadius: 5, alignItems: "center", justifyContent: "center" },

@@ -1,0 +1,1 @@
+{"expo":{"name":"OmniMind","slug":"omnimind","scheme":"omnimind","version":"0.1.0","orientation":"default","userInterfaceStyle":"automatic","newArchEnabled":true,"web":{"bundler":"metro","output":"static"},"ios":{"supportsTablet":true,"bundleIdentifier":"app.omnimind.client"},"android":{"package":"app.omnimind.client"},"experiments":{"typedRoutes":true}}}

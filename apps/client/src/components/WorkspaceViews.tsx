@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
 import { useRouter } from "expo-router";
-import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import { PageFrame } from "./PageFrame";
 
 const C = {
   bg: "#F8FAFC", white: "#FFFFFF", ink: "#172033", muted: "#8491A4",
@@ -14,10 +14,6 @@ type MetricProps = { icon: string; label: string; value: string; hint: string; c
 export { AppIcon } from "./AppIcon";
 import { AppIcon } from "./AppIcon";
 
-export function PageFrame({ children }: { children: ReactNode }) {
-  const { width } = useWindowDimensions();
-  return <ScrollView style={s.scroll} contentContainerStyle={[s.content, { paddingHorizontal: width >= 900 ? 34 : 18 }]} showsVerticalScrollIndicator={false}>{children}</ScrollView>;
-}
 
 export function Dashboard() {
   const { width } = useWindowDimensions();
@@ -66,22 +62,6 @@ function SectionCard({ icon, title, color, tint, wide, route }: { icon: string; 
       <Text style={s.sectionCardTitle}>{title}</Text>
     </Pressable>
   );
-}
-
-export function ModulePage({ name, eyebrow, description, icon }: { name: string; eyebrow: string; description: string; icon: string }) {
-  return <PageFrame>
-    <View style={s.moduleHeading}>
-      <Text style={s.moduleEyebrow}>{eyebrow}</Text>
-      <Text style={s.moduleTitle}>{name}</Text>
-      <Text style={s.moduleDescription}>{description}</Text>
-    </View>
-    <View style={s.moduleCard}>
-      <View style={s.moduleIcon}><Text style={{ color: C.blue, fontSize: 25 }}>{icon}</Text></View>
-      <Text style={s.moduleStatus}>قيد التطوير</Text>
-      <Text style={s.moduleCardTitle}>نعمل على تجهيز قسم {name}</Text>
-      <Text style={s.moduleDescription}>سيتم بناء وظائف هذا القسم وربطها ببقية مساحة العمل ضمن مراحل التطوير المعتمدة.</Text>
-    </View>
-  </PageFrame>;
 }
 
 const s = StyleSheet.create({

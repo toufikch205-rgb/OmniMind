@@ -19,3 +19,7 @@ Backend/database/auth provider, offline storage and conflict resolution, final d
 ## Phase 1 readiness
 
 See [Phase 1 Readiness Review](./phase-1-readiness-review.md) for the current foundation assessment, recommendations, unresolved decisions and evidence-based completion gates.
+
+## Accepted backend and identity baseline
+
+[ADR 0002](./decisions/0002-backend-identity-offline-baseline.md) records the approved initial direction for Supabase/PostgreSQL, personal workspaces, verified email/password authentication, offline editing and synchronization boundaries. See the [backend/data evaluation](./backend-data-evaluation.md) for alternatives and implementation constraints.

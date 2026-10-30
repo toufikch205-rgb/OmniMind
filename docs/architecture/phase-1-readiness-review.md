@@ -74,17 +74,18 @@ Realtime notifications must not be treated as the durable synchronization protoc
 
 Design for private-by-default user data and least privilege. Model ownership and workspace boundaries explicitly even if initial workspaces are personal. Shared collaboration should remain disabled until its roles, invitations, revocation and cross-tenant tests are designed.
 
-## 4. Decisions still required before backend implementation
+## 4. Decisions recorded
 
-The following are genuine product decisions and must not be guessed:
+The project owner delegated these baseline choices. They are now recorded in [ADR 0002](./decisions/0002-backend-identity-offline-baseline.md):
 
-1. **Workspace model:** personal workspaces only in the first release, or shared workspaces with multiple members?
-2. **Offline promise:** cached/read-only access while offline, or create and edit offline with later synchronization?
-3. **Sign-in methods:** email/password, email magic link, Google, Apple, or a staged combination?
-4. **Account lifecycle:** required recovery method, account deletion expectations, and whether users can export all their data.
-5. **First release data scope:** which data types must synchronize across devices from the first usable release?
+1. **Backend:** Supabase with PostgreSQL as the initial direction, subject to schema/RLS/security design gates.
+2. **Workspace model:** personal workspaces only in the first release; preserve a future membership boundary.
+3. **Offline promise:** read and create/edit offline for core personal data using SQLite and a durable outbox.
+4. **Authentication:** email/password with verified email and secure password reset; Google and Apple are deferred.
+5. **Data rights:** provide personal data export and account deletion with a documented retention policy.
+6. **Initial sync scope:** profile essentials, personal workspace, projects/categories, tasks/subtasks/goals, plans/calendar entries, notes/documents and essential preferences.
 
-Once these are answered, record the backend/auth/sync decision as an accepted ADR before implementation.
+These decisions establish the architecture baseline. They do not authorize production deployment or unreviewed schema/security implementation.
 
 ## 5. Phase 1 completion gates
 

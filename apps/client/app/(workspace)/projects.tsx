@@ -1,2 +1,5 @@
-import { ModulePage } from "../../src/components/WorkspaceViews";
-export default function ProjectsRoute(){return <ModulePage eyebrow="OMNIMIND · WORKSPACE" name="Projects" description="Bring related work together and keep the bigger picture in view." icon="▤"/>;}
+import ProjectsScreen from "../../src/features/projects/screens/ProjectsScreen";
+
+export default function ProjectsRoute() {
+  return <ProjectsScreen />;
+}

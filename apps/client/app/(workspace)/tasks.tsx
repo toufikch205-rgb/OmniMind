@@ -1,4 +1,4 @@
-import TasksScreen from "../../src/features/tasks/screens/TasksScreen";
+import { TasksScreen } from "../../src/features/tasks";
 
 export default function TasksRoute() {
   return <TasksScreen />;

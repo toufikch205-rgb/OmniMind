@@ -43,8 +43,11 @@ const s = StyleSheet.create({
   bellWrap: { width: 34, height: 38, alignItems: "center", justifyContent: "center" },
   bell: { color: "#526174", fontSize: 25, fontWeight: "700" },
   notificationDot: { position: "absolute", top: 6, right: 4, width: 8, height: 8, borderRadius: 4, backgroundColor: "#F18B8B" },
-  body: { flex: 1, flexDirection: "row", width: "100%", maxWidth: 1600, alignSelf: "center", paddingBottom: 76 },
+  body: { flex: 1, minHeight: 0, flexDirection: "row", width: "100%", maxWidth: 1600, alignSelf: "center", paddingBottom: 0 },
   sidebar: { width: 230, paddingHorizontal: 17, paddingTop: 28, borderRightWidth: 1, borderRightColor: C.border, backgroundColor: "#FBFCFE" },
   section: { color: C.muted, fontSize: 11, fontWeight: "800", textAlign: "right", marginRight: 12, marginBottom: 14 },
-
+  page: { flex: 1, minWidth: 0, minHeight: 0 },
+  tablet: { height: 58, backgroundColor: C.surface, borderBottomWidth: 1, borderBottomColor: C.border, justifyContent: "center" },
+  tabletInner: { flexDirection: "row-reverse", alignItems: "center", paddingHorizontal: 12, gap: 8 },
+  bottom: { height: 76, minHeight: 76, width: "100%", flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-around", paddingHorizontal: 8, backgroundColor: C.surface, borderTopWidth: 1, borderTopColor: C.border, elevation: 12, zIndex: 20 },
 });

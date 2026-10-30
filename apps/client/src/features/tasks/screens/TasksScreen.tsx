@@ -43,6 +43,7 @@ export default function TasksScreen() {
       : { ...page, children: updateTree(page.children, id, update) });
 
   const createPage = (parentId: string | null = null) => {
+    setSaveLabel("حفظ");
     const page: TaskPage = { id: createId(), title: "", icon: "📄", blocks: [], children: [] };
     setPages((old) => parentId
       ? updateTree(old, parentId, (parent) => ({ ...parent, children: [...parent.children, page] }))
@@ -68,6 +69,7 @@ export default function TasksScreen() {
 
   const updateBlock = (id: string, patch: Partial<TaskBlockData>) => {
     if (!current) return;
+    setSaveLabel("حفظ");
     setPages((old) => updateTree(old, current.id, (page) => ({
       ...page,
       blocks: page.blocks.map((block) => block.id === id ? { ...block, ...patch } : block),
@@ -76,6 +78,7 @@ export default function TasksScreen() {
 
   const deleteBlock = (id: string) => {
     if (!current) return;
+    setSaveLabel("حفظ");
     setPages((old) => updateTree(old, current.id, (page) => ({
       ...page,
       blocks: page.blocks.filter((block) => block.id !== id),

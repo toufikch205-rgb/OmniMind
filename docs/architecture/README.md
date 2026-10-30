@@ -15,3 +15,7 @@ Presentation -> application use-cases -> domain contracts. Infrastructure implem
 
 ## Decisions still open
 Backend/database/auth provider, offline storage and conflict resolution, final design system, deployment and release environments. These are not guessed in the scaffold; each needs a recorded decision before implementation.
+
+## Phase 1 readiness
+
+See [Phase 1 Readiness Review](./phase-1-readiness-review.md) for the current foundation assessment, recommendations, unresolved decisions and evidence-based completion gates.

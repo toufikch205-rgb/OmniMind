@@ -50,10 +50,8 @@ export function Dashboard() {
       <View style={[s.sections, wide && s.sectionsWide]}>
         <SectionCard icon="check" title="المهام" color={C.blue} tint={C.blueSoft} wide={wide} />
         <SectionCard icon="calendar" title="التخطيط" color={C.purple} tint={C.purpleSoft} wide={wide} />
-        <SectionCard icon="book" title="المعرفة" color={C.teal} tint={C.tealSoft} wide={wide} />
-        <SectionCard icon="projects" title="المشاريع" color={C.green} tint={C.greenSoft} wide={wide} />
+        
       </View>
-      <Text style={s.note}>الأرقام المعروضة حالياً تجريبية، وسيتم ربطها ببياناتك الفعلية تدريجياً.</Text>
     </PageFrame>
   );
 }
@@ -97,27 +95,27 @@ export function ModulePage({ name, eyebrow, description, icon }: { name: string;
 
 const s = StyleSheet.create({
   scroll: { flex: 1 },
-  content: { width: "100%", maxWidth: 920, alignSelf: "center", paddingTop: 23, paddingBottom: 28 },
-  welcome: { alignItems: "flex-end", marginBottom: 25, paddingHorizontal: 2 },
-  welcomeTitle: { color: C.ink, fontSize: 27, fontWeight: "800", textAlign: "right" },
-  welcomeSubtitle: { color: C.muted, fontSize: 15, fontWeight: "600", marginTop: 9, textAlign: "right" },
-  metrics: { gap: 12 },
-  metricsWide: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 12 },
-  metric: { minHeight: 112, width: "100%", backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 19, paddingHorizontal: 17, paddingVertical: 15, flexDirection: "row", alignItems: "center", gap: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  content: { width: "100%", maxWidth: 920, alignSelf: "center", paddingTop: 12, paddingBottom: 12 },
+  welcome: { alignItems: "flex-end", marginBottom: 14, paddingHorizontal: 2 },
+  welcomeTitle: { color: C.ink, fontSize: 24, fontWeight: "800", textAlign: "right" },
+  welcomeSubtitle: { color: C.muted, fontSize: 13, fontWeight: "600", marginTop: 5, textAlign: "right" },
+  metrics: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 9 },
+  metricsWide: { rowGap: 12 },
+  metric: { minHeight: 78, width: "48.5%", backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 15, paddingHorizontal: 10, paddingVertical: 9, flexDirection: "row", alignItems: "center", gap: 8, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   metricWide: { width: "48.5%" },
-  metricIcon: { width: 62, height: 62, borderRadius: 33, alignItems: "center", justifyContent: "center" },
+  metricIcon: { width: 42, height: 42, borderRadius: 22, flexShrink: 0, alignItems: "center", justifyContent: "center" },
   
   metricCopy: { flex: 1, alignItems: "flex-end" },
-  metricLabel: { color: "#536176", fontSize: 13, fontWeight: "700", textAlign: "right" },
-  metricValueRow: { flexDirection: "row", alignItems: "baseline", gap: 8, marginTop: 4 },
-  metricValue: { fontSize: 29, fontWeight: "800" },
-  metricHint: { color: C.muted, fontSize: 12, fontWeight: "600" },
-  sectionTitle: { color: C.ink, fontSize: 21, fontWeight: "800", textAlign: "right", marginTop: 29, marginBottom: 14 },
-  sections: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 12 },
+  metricLabel: { color: "#536176", fontSize: 11, fontWeight: "700", textAlign: "right" },
+  metricValueRow: { flexDirection: "row", alignItems: "baseline", gap: 6, marginTop: 1 },
+  metricValue: { fontSize: 23, fontWeight: "800" },
+  metricHint: { color: C.muted, fontSize: 10, fontWeight: "600" },
+  sectionTitle: { color: C.ink, fontSize: 18, fontWeight: "800", textAlign: "right", marginTop: 17, marginBottom: 9 },
+  sections: { flexDirection: "row", flexWrap: "nowrap", justifyContent: "space-between", columnGap: 10 },
   sectionsWide: { justifyContent: "space-between", gap: 0 },
-  sectionCard: { width: "48.3%", minHeight: 148, backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 18, alignItems: "center", justifyContent: "center", padding: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  sectionCard: { width: "48.5%", minHeight: 108, backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 18, alignItems: "center", justifyContent: "center", padding: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
   sectionCardWide: { width: "23.5%" },
-  sectionIcon: { width: 62, height: 62, borderRadius: 34, alignItems: "center", justifyContent: "center", marginBottom: 10 },
+  sectionIcon: { width: 48, height: 48, borderRadius: 34, alignItems: "center", justifyContent: "center", marginBottom: 10 },
   
   sectionCardTitle: { color: "#536176", fontSize: 14, fontWeight: "800" },
   note: { color: "#9AA5B4", fontSize: 10, textAlign: "center", marginTop: 18, lineHeight: 16 },

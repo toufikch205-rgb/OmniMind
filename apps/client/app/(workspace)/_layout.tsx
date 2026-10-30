@@ -5,7 +5,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } fr
 const C = { bg: "#F8FAFC", surface: "#FFFFFF", ink: "#172033", muted: "#8491A4", border: "#E9EDF3", blue: "#397DEB", blueSoft: "#E8F1FF", purple: "#9658E8" };
 const items = [
   { path: "/(workspace)", label: "الرئيسية", short: "الرئيسية", icon: "home" },
-  { path: "/(workspace)/tasks", label: "المهام", short: "المهام", icon: "check" },
+  { path: "/(workspace)/tasks", label: "المهام", short: "المهام", icon: "tasks" },
   { path: "/(workspace)/planning", label: "التخطيط", short: "التخطيط", icon: "calendar" },
   { path: "/(workspace)/knowledge", label: "المعرفة", short: "المعرفة", icon: "book" },
   { path: "/(workspace)/projects", label: "المشاريع", short: "المشاريع", icon: "projects" },

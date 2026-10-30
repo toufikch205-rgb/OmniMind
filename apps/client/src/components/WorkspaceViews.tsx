@@ -114,11 +114,10 @@ const s = StyleSheet.create({
   sections: { flexDirection: "row", flexWrap: "nowrap", justifyContent: "space-between", columnGap: 10 },
   sectionsWide: { justifyContent: "space-between", gap: 0 },
   sectionCard: { width: "48.5%", minHeight: 108, backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 18, alignItems: "center", justifyContent: "center", padding: 14, shadowColor: "#24344D", shadowOpacity: 0.035, shadowRadius: 9, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
-  sectionCardWide: { width: "23.5%" },
-  sectionIcon: { width: 48, height: 48, borderRadius: 34, alignItems: "center", justifyContent: "center", marginBottom: 10 },
+  sectionCardWide: { width: "48.5%" },
+  sectionIcon: { width: 48, height: 48, borderRadius: 24, alignItems: "center", justifyContent: "center", marginBottom: 7 },
   
   sectionCardTitle: { color: "#536176", fontSize: 14, fontWeight: "800" },
-  note: { color: "#9AA5B4", fontSize: 10, textAlign: "center", marginTop: 18, lineHeight: 16 },
   moduleHeading: { alignItems: "flex-end", marginBottom: 22 },
   moduleEyebrow: { color: C.blue, fontSize: 10, fontWeight: "800" },
   moduleTitle: { color: C.ink, fontSize: 29, fontWeight: "800", marginTop: 8, textAlign: "right" },

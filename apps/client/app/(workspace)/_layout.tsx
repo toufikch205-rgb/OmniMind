@@ -53,7 +53,7 @@ export default function WorkspaceLayout() {
         <View style={s.page}><Stack screenOptions={{ headerShown: false, animation: "fade", contentStyle: { backgroundColor: C.bg } }} /></View>
       </View>
 
-      {!immersive && !desktop && !tablet ? <View style={s.bottom}>{items.map(i => <NavItem key={i.path} item={i} compact active={selected === i.path} onPress={() => go(i.path)} />)}</View> : null}
+      {!desktop && !tablet ? <View style={s.bottom}>{items.map(i => <NavItem key={i.path} item={i} compact active={selected === i.path} onPress={() => go(i.path)} />)}</View> : null}
     </View>
   );
 }

@@ -1,19 +1,20 @@
 import { Stack, usePathname, useRouter } from "expo-router";
+import { AppIcon } from "../../src/components/WorkspaceViews";
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 
 const C = { bg: "#F8FAFC", surface: "#FFFFFF", ink: "#172033", muted: "#8491A4", border: "#E9EDF3", blue: "#397DEB", blueSoft: "#E8F1FF", purple: "#9658E8" };
 const items = [
-  { path: "/(workspace)", label: "الرئيسية", short: "الرئيسية", icon: "⌂" },
-  { path: "/(workspace)/tasks", label: "المهام", short: "المهام", icon: "☑" },
-  { path: "/(workspace)/planning", label: "التخطيط", short: "التخطيط", icon: "▦" },
-  { path: "/(workspace)/knowledge", label: "المعرفة", short: "المعرفة", icon: "◫" },
-  { path: "/(workspace)/projects", label: "المشاريع", short: "المشاريع", icon: "▤" },
+  { path: "/(workspace)", label: "الرئيسية", short: "الرئيسية", icon: "home" },
+  { path: "/(workspace)/tasks", label: "المهام", short: "المهام", icon: "check" },
+  { path: "/(workspace)/planning", label: "التخطيط", short: "التخطيط", icon: "calendar" },
+  { path: "/(workspace)/knowledge", label: "المعرفة", short: "المعرفة", icon: "book" },
+  { path: "/(workspace)/projects", label: "المشاريع", short: "المشاريع", icon: "projects" },
 ];
 
 function NavItem({ item, active, compact, onPress }: { item: typeof items[number]; active: boolean; compact?: boolean; onPress: () => void }) {
   return (
     <Pressable accessibilityRole="button" accessibilityState={{ selected: active }} onPress={onPress} style={[compact ? s.mobileItem : s.navItem, active && (compact ? s.mobileActive : s.navActive)]}>
-      <Text style={[compact ? s.mobileIcon : s.navIcon, active && s.activeText]}>{item.icon}</Text>
+      <View style={compact ? s.mobileIcon : s.navIcon}><AppIcon name={item.icon} color={active ? C.blue : "#8793A3"} size={compact ? 23 : 21} /></View>
       <Text numberOfLines={1} style={[compact ? s.mobileLabel : s.navLabel, active && s.activeText]}>{item.label}</Text>
       {!compact && active ? <View style={s.rail} /> : null}
     </Pressable>
@@ -40,7 +41,7 @@ export default function WorkspaceLayout() {
           <Text style={s.brand}><Text style={{ color: C.blue }}>Omni</Text><Text style={{ color: C.purple }}>Mind</Text></Text>
         </View>
         <View style={s.headerRight}>
-          <View style={s.bellWrap}><Text style={s.bell}>♧</Text><View style={s.notificationDot} /></View>
+          <View style={s.bellWrap}><AppIcon name="bell" color="#526174" size={23} /><View style={s.notificationDot} /></View>
         </View>
       </View>
 
@@ -74,7 +75,7 @@ const s = StyleSheet.create({
   section: { color: C.muted, fontSize: 11, fontWeight: "800", textAlign: "right", marginRight: 12, marginBottom: 14 },
   navItem: { minHeight: 47, borderRadius: 11, paddingHorizontal: 12, marginBottom: 5, flexDirection: "row-reverse", alignItems: "center", gap: 12, position: "relative" },
   navActive: { backgroundColor: C.blueSoft },
-  navIcon: { width: 22, textAlign: "center", color: "#8793A3", fontSize: 19 },
+  navIcon: { width: 24, height: 27, alignItems: "center", justifyContent: "center" },
   navLabel: { color: "#64748B", fontSize: 12, fontWeight: "600", textAlign: "right" },
   activeText: { color: C.blue },
   rail: { position: "absolute", right: 0, top: 10, bottom: 10, width: 3, borderRadius: 4, backgroundColor: C.blue },
@@ -82,8 +83,8 @@ const s = StyleSheet.create({
   tablet: { height: 58, backgroundColor: C.surface, borderBottomWidth: 1, borderBottomColor: C.border },
   tabletInner: { alignItems: "center", paddingHorizontal: 16, gap: 7 },
   bottom: { height: 76, paddingHorizontal: 4, paddingBottom: 5, backgroundColor: C.surface, borderTopWidth: 1, borderTopColor: C.border, flexDirection: "row", justifyContent: "space-around", alignItems: "center" },
-  mobileItem: { minWidth: 58, flex: 1, height: 66, flexDirection: "column", gap: 4, justifyContent: "center", alignItems: "center" },
+  mobileItem: { minWidth: 58, flex: 1, height: 66, flexDirection: "column", gap: 5, justifyContent: "center", alignItems: "center" },
   mobileActive: { backgroundColor: "transparent" },
-  mobileIcon: { fontSize: 22, color: "#7D899A" },
-  mobileLabel: { color: "#7D899A", fontSize: 10, fontWeight: "700" },
+  mobileIcon: { height: 28, alignItems: "center", justifyContent: "center" },
+  mobileLabel: { color: "#7D899A", fontSize: 10, fontWeight: "700", letterSpacing: 0.1 },
 });

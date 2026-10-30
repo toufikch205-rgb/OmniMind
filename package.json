@@ -1,0 +1,1 @@
+{"name":"omnimind","version":"0.1.0","private":true,"packageManager":"pnpm@10.18.3","engines":{"node":">=22.13.0"},"scripts":{"dev":"pnpm --filter @omnimind/client start","web":"pnpm --filter @omnimind/client web","android":"pnpm --filter @omnimind/client android","ios":"pnpm --filter @omnimind/client ios","typecheck":"pnpm -r typecheck"}}
